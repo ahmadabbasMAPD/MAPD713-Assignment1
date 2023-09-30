@@ -137,6 +137,7 @@ server.put('/products/:id', function (req, res, next) {
 server.del('/products/:id', function (req, res, next) {
   console.log('POST /products params=>' + JSON.stringify(req.params));
   // Delete the product with the persistence engine
+  // added provsion to delete multiple entries
   productsSave.deleteMany({}, function (error, product) {
 
     // If there are any errors, pass them to next in the correct format
