@@ -1,18 +1,19 @@
 {
-    "name": "UsersApi",
+    "name": "ProductsApi",
     "version": "1.2.0",
-    "description": "REST API - Users",
+    "description": "REST API - Product",
     "main": "index.js",
     "engines": {
-      "node": ">=4.1.1",
-      "npm": ">=2.1.x"
+        "node": ">=4.1.1",
+        "npm": ">=2.1.x"
     },
     "authors": [
-      "Viktor"
+        "Ahmad"
     ],
     "license": "MIT",
     "dependencies": {
-      "restify": "=11.1.0",
-      "save": "=2.9.0"
+        "@appland/appmap-agent-js": "^14.2.0",
+        "restify": "=11.1.0",
+        "save": "=2.9.0"
     }
 }
