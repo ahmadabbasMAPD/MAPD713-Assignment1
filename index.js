@@ -46,10 +46,10 @@ server.get('/products/:id', function (req, res, next) {
 
     if (product) {
       // Send the product if no issues
-      res.send(product)
+      res.send('list of products',product)
     } else {
       // Send 404 header if the product doesn't exist
-      res.send(404)
+      res.send('Product does not exist', 404)
     }
   })
 })
@@ -91,7 +91,7 @@ server.post('/products', function (req, res, next) {
     if (error) return next(new Error(JSON.stringify(error.errors)))
 
     // Send the product if no issues
-    res.send(201, product)
+    res.send(201, 'Product has be created\n', product)
   })
 })
 
