@@ -39,17 +39,17 @@ server.get('/products/:id', function (req, res, next) {
   console.log('GET /products/:id params=>' + JSON.stringify(req.params));
 
   // Find a single product by their id within save
-  productsSave.findOne({ productID: req.params.id }, function (error, product) {
+  productsSave.findOne({ productId: req.params.id }, function (error, product) {
 
     // If there are any errors, pass them to next in the correct format
     if (error) return next(new Error(JSON.stringify(error.errors)))
 
     if (product) {
       // Send the product if no issues
-      res.send('list of products',product)
+      res.send(product)
     } else {
       // Send 404 header if the product doesn't exist
-      res.send('Product does not exist', 404)
+      res.send(404)
     }
   })
 })
@@ -72,16 +72,16 @@ server.post('/products', function (req, res, next) {
     // If there are any errors, pass them to next in the correct format
     return next(new errors.BadRequestError('price must be supplied'))
   }
-  if (req.body.productID === undefined ) {
+  if (req.body.productId === undefined ) {
     // If there are any errors, pass them to next in the correct format
-    return next(new errors.BadRequestError('productID must be supplied'))
+    return next(new errors.BadRequestError('productId must be supplied'))
   }
 
   let newproduct = {
 		name: req.body.name, 
 		quantity: req.body.quantity,
     price: req.body.price,
-    productID: req.body.productID,
+    productId: req.body.productId,
 	}
 
   // Create the product using the persistence engine
@@ -91,7 +91,7 @@ server.post('/products', function (req, res, next) {
     if (error) return next(new Error(JSON.stringify(error.errors)))
 
     // Send the product if no issues
-    res.send(201, 'Product has be created\n', product)
+    res.send(201, product)
   })
 })
 
@@ -117,7 +117,7 @@ server.put('/products/:id', function (req, res, next) {
     return next(new errors.BadRequestError('product must be supplied'))
   }
   let newproduct = {
-		productID: req.body.productID,
+		productId: req.body.productId,
 		name: req.body.name, 
 		quantity: req.body.quantity,
     price: req.body.price
@@ -133,22 +133,17 @@ server.put('/products/:id', function (req, res, next) {
   })
 })
 
-
-
-// Delete all records
+// Delete product records
 server.del('/products', function (req, res, next) {
-  console.log('DELETE /products params=>' + JSON.stringify(req.params));
+  console.log('POST /products params=>' + JSON.stringify(req.params));
+  // Delete the product with the persistence engine
+  productsSave.deleteMany({}, function (error, product) {
 
-  // Remove all entities within the given collection
-  productsSave.deleteMany({}, function (error, products) {
+    // If there are any errors, pass them to next in the correct format
+    if (error) return next(new Error(JSON.stringify(error.errors)))
 
-    // Return a success message if no issues
-    res.send(200, 'All records have been deleted successfully.')
+    // Send a 204 response
+    res.send(204, 'All products have been deleted sucessfully')
   })
 })
-
-
-
-
-
 
